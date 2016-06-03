@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B0DAA451D01E3E60058C6D1 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 1B0DAA441D01E3E60058C6D1 /* .gitignore */; };
 		7B5BEE4D1B6629070019172B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5BEE4C1B6629070019172B /* AppDelegate.swift */; };
 		7B5BEE4F1B6629070019172B /* ChecklistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5BEE4E1B6629070019172B /* ChecklistViewController.swift */; };
 		7B5BEE521B6629070019172B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B5BEE501B6629070019172B /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B0DAA441D01E3E60058C6D1 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = SOURCE_ROOT; };
 		7B5BEE491B6629070019172B /* Checklists.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Checklists.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B5BEE4C1B6629070019172B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7B5BEE4E1B6629070019172B /* ChecklistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 			children = (
 				7B5BEE4C1B6629070019172B /* AppDelegate.swift */,
 				7B5BEE4E1B6629070019172B /* ChecklistViewController.swift */,
+				1B0DAA441D01E3E60058C6D1 /* .gitignore */,
 				7B5BEE501B6629070019172B /* Main.storyboard */,
 				7B5BEE531B6629070019172B /* Assets.xcassets */,
 				7B5BEE551B6629070019172B /* LaunchScreen.storyboard */,
@@ -127,6 +130,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B0DAA451D01E3E60058C6D1 /* .gitignore in Resources */,
 				7B5BEE571B6629070019172B /* LaunchScreen.storyboard in Resources */,
 				7B5BEE541B6629070019172B /* Assets.xcassets in Resources */,
 				7B5BEE521B6629070019172B /* Main.storyboard in Resources */,

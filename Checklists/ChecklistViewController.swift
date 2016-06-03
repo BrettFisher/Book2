@@ -98,6 +98,8 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
     } else {
       cell.accessoryType = .None
     }
+    
+    print("Hey this method ran. Cool")
   }
   
   func addItemViewControllerDidCancel(controller: AddItemViewController) {
@@ -116,7 +118,8 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
     dismissViewControllerAnimated(true, completion: nil)
   }
   
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+  {
     if segue.identifier == "AddItem" {
       let navigationController = segue.destinationViewController as! UINavigationController
       let controller = navigationController.topViewController as! AddItemViewController

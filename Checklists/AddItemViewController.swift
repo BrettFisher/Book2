@@ -9,28 +9,36 @@
 import Foundation
 import UIKit
 
-protocol AddItemViewControllerDelegate: class {
-  func addItemViewControllerDidCancel(controller: AddItemViewController)
-  func addItemViewController(controller: AddItemViewController, didFinishAddingItem item: ChecklistItem)
+//contract between screens
+protocol AddItemViewControllerDelegate: class
+{
+    //this is for pressing cancel()
+    func addItemViewControllerDidCancel(controller: AddItemViewController)
+    //this is for pressing done()
+    func addItemViewController(controller: AddItemViewController, didFinishAddingItem item: ChecklistItem)
 }
 
-class AddItemViewController: UITableViewController, UITextFieldDelegate {
+class AddItemViewController: UITableViewController, UITextFieldDelegate
+{
 
   @IBOutlet weak var textField: UITextField!
   @IBOutlet weak var doneBarButton: UIBarButtonItem!
 
   weak var delegate: AddItemViewControllerDelegate?
 
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(animated: Bool)
+  {
     super.viewWillAppear(animated)
     textField.becomeFirstResponder()
   }
   
-  @IBAction func cancel() {
+  @IBAction func cancel()
+  {
     delegate?.addItemViewControllerDidCancel(self)
   }
   
-  @IBAction func done() {
+  @IBAction func done()
+  {
     let item = ChecklistItem()
     item.text = textField.text!
     item.checked = false
@@ -38,15 +46,18 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     delegate?.addItemViewController(self, didFinishAddingItem: item)
   }
   
-  override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+  override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath?
+  {
     return nil
   }
   
-  func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+  func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+  {
     let oldText: NSString = textField.text!
     let newText: NSString = oldText.stringByReplacingCharactersInRange(range, withString: string)
 
-    doneBarButton.enabled = (newText.length > 0)
+    doneBarButton.enabled = newText.length > 0
+    //if ___ {stuff} else {things} can also be written -> something = some condition
     return true
   }
 }

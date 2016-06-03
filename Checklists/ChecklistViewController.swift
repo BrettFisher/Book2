@@ -8,10 +8,12 @@
 
 import UIKit
 
-class ChecklistViewController: UITableViewController, AddItemViewControllerDelegate {
+class ChecklistViewController: UITableViewController, AddItemViewControllerDelegate
+{
   var items: [ChecklistItem]
 
-  required init?(coder aDecoder: NSCoder) {
+  required init?(coder aDecoder: NSCoder)
+  {
     items = [ChecklistItem]()
     
     let row0item = ChecklistItem()
@@ -42,21 +44,25 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
     super.init(coder: aDecoder)
   }
   
-  override func viewDidLoad() {
+  override func viewDidLoad()
+  {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
   }
 
-  override func didReceiveMemoryWarning() {
+  override func didReceiveMemoryWarning()
+  {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
   }
 
-  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+  {
     return items.count
   }
   
-  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+  {
       
     let cell = tableView.dequeueReusableCellWithIdentifier("ChecklistItem", forIndexPath: indexPath)
     
@@ -68,8 +74,8 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
     return cell
   }
   
-  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-      
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+  {
     if let cell = tableView.cellForRowAtIndexPath(indexPath) {
       let item = items[indexPath.row]
       item.toggleChecked()
@@ -79,35 +85,38 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
   }
   
-  override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle,forRowAtIndexPath indexPath: NSIndexPath) {
-
+  override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle,forRowAtIndexPath indexPath: NSIndexPath)
+  {
     items.removeAtIndex(indexPath.row)
     
     let indexPaths = [indexPath]
     tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
   }
   
-  func configureTextForCell(cell: UITableViewCell, withChecklistItem item: ChecklistItem) {
+  func configureTextForCell(cell: UITableViewCell, withChecklistItem item: ChecklistItem)
+  {
     let label = cell.viewWithTag(1000) as! UILabel
     label.text = item.text
   }
   
-  func configureCheckmarkForCell(cell: UITableViewCell, withChecklistItem item: ChecklistItem) {
+  func configureCheckmarkForCell(cell: UITableViewCell, withChecklistItem item: ChecklistItem)
+  {
     if item.checked {
       cell.accessoryType = .Checkmark
     } else {
       cell.accessoryType = .None
     }
-    
-    print("Hey this method ran. Cool")
-    //helloworld
   }
   
-  func addItemViewControllerDidCancel(controller: AddItemViewController) {
+  //protocol method
+  func addItemViewControllerDidCancel(controller: AddItemViewController)
+  {
     dismissViewControllerAnimated(true, completion: nil)
   }
   
-  func addItemViewController(controller: AddItemViewController, didFinishAddingItem item: ChecklistItem) {
+    //protocol method
+  func addItemViewController(controller: AddItemViewController, didFinishAddingItem item: ChecklistItem)
+  {
     let newRowIndex = items.count
     
     items.append(item)
@@ -121,10 +130,24 @@ class ChecklistViewController: UITableViewController, AddItemViewControllerDeleg
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
   {
-    if segue.identifier == "AddItem" {
+    if segue.identifier == "AddItem"
+    {
       let navigationController = segue.destinationViewController as! UINavigationController
       let controller = navigationController.topViewController as! AddItemViewController
       controller.delegate = self
     }
   }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

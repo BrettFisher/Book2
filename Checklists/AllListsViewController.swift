@@ -16,6 +16,20 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     {
         super.viewDidLoad()
     }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        super.viewDidAppear(animated)
+        
+        navigationController?.delegate = self//view controller makes itself delegate for nav controller
+        
+        let index = dataModel.indexOfSelectedChecklist
+        if index >= 0 && index < dataModel.lists.count
+        {
+            let checklist = dataModel.lists[index]
+            performSegueWithIdentifier("ShowChecklist", sender: checklist)
+        }
+    }
   
     override func didReceiveMemoryWarning()
     {
@@ -27,7 +41,8 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     {
         return dataModel.lists.count
     }
-
+    
+    //things happening in the cell
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell = cellForTableView(tableView)
@@ -35,23 +50,34 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         let checklist = dataModel.lists[indexPath.row]
         cell.textLabel!.text = checklist.name
         cell.accessoryType = .DetailDisclosureButton
-    
+        
+        let count = checklist.countUncheckedItems()
+        if checklist.items.count == 0
+        {
+            cell.detailTextLabel!.text = "(No items)"
+        } else if count == 0 {
+            cell.detailTextLabel!.text = "All tasks completed"
+        } else {
+            cell.detailTextLabel!.text = "\(count) Remaining"
+        }
         return cell
     }
 
     func cellForTableView(tableView: UITableView) -> UITableViewCell
     {
         let cellIdentifier = "Cell"
-        if let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) {
+        if let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
+        {
             return cell
         } else {
-            return UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
+            //use detailTextLabel to access the new subtitle property
+            return UITableViewCell(style: .Subtitle, reuseIdentifier: cellIdentifier)
         }
     }
   
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        NSUserDefaults.standardUserDefaults().setInteger(indexPath.row, forKey: "ChecklistIndex")//stores index upon tap
+        dataModel.indexOfSelectedChecklist = indexPath.row //stores index upon tap
         let checklist = dataModel.lists[indexPath.row]
         performSegueWithIdentifier("ShowChecklist", sender: checklist)
     }
@@ -99,26 +125,37 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
   
     func listDetailViewController(controller: ListDetailViewController, didFinishAddingChecklist checklist: Checklist)
     {
-        let newRowIndex = dataModel.lists.count
-    
         dataModel.lists.append(checklist)
-    
-        let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
-        let indexPaths = [indexPath]
-        tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-    
+        dataModel.sortChecklists()
+        tableView.reloadData()
         dismissViewControllerAnimated(true, completion: nil)
     }
   
     func listDetailViewController(controller: ListDetailViewController, didFinishEditingChecklist checklist: Checklist)
     {
-        if let index = dataModel.lists.indexOf(checklist) {
-            let indexPath = NSIndexPath(forRow: index, inSection: 0)
-            if let cell = tableView.cellForRowAtIndexPath(indexPath) {
-                cell.textLabel!.text = checklist.name
-            }
-        }
+        dataModel.sortChecklists()
+        tableView.reloadData()
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    //delegate method
+    func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool)
+    {
+        if viewController === self
+        {
+            dataModel.indexOfSelectedChecklist = -1
+        }
+        print("navigationController(willShowViewController) ran and completed")
+    }
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
+    
+    
+    
     
 }

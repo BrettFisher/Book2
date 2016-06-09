@@ -23,6 +23,19 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     
     @IBAction func getLocation()
     {
+        let authStatus = CLLocationManager.authorizationStatus()
+        if authStatus == .NotDetermined
+        {
+            locationManager.requestWhenInUseAuthorization()
+            return
+        }
+        
+        if authStatus == .Denied || authStatus == .Restricted
+        {
+            showLocationServicesDeniedAlert()
+            return
+        }
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.startUpdatingLocation()
@@ -36,6 +49,17 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
+    }
+    
+    func showLocationServicesDeniedAlert()
+    {
+        let alert = UIAlertController(title: "Location Services Disabled", message: "Please enable location services for this app in Settings.", preferredStyle: .Alert)
+        
+        let okAction = UIAlertAction(title: "Okay", style: .Default, handler: nil)
+        
+        alert.addAction(okAction)
+        
+        presentViewController(alert, animated: true, completion: nil)
     }
     
     // MARK: - CLLocationManagerDelegate

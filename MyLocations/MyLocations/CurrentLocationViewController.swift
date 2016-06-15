@@ -61,7 +61,7 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         configureGetButton()
     }
     
-    // MARK: - OutOfBoxMethods
+    // MARK: - Out of Box Methods
     
     override func viewDidLoad()
     {
@@ -76,7 +76,18 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         super.didReceiveMemoryWarning()
     }
     
-    // MARK: - MyMethods
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    {
+        if segue.identifier == "TagLocation"
+        {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let controller = navigationController.topViewController as! LocationDetailsViewController
+            controller.coordinate = location!.coordinate
+            controller.placemark = placemark
+        }
+    }
+    
+    // MARK: - My Methods
     
     func showLocationServicesDeniedAlert()
     {
